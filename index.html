@@ -1,14 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
-  <title>Controlla Il Mondo</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Controlla il Mondo</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;display:flex;height:100vh;background:#0f1720;color:#fff}
+#sidebar{width:320px;background:#0b1220;padding:16px;box-sizing:border-box;border-right:1px solid rgba(255,255,255,0.05)}
+#map-wrap{flex:1;display:flex;justify-content:center;align-items:center;padding:16px;box-sizing:border-box}
+svg{width:95%;height:95%;max-width:1400px;max-height:800px}
+svg path{fill:#2b3946;stroke:#0b1116;stroke-width:0.6;cursor:pointer;transition:fill .18s}
+svg path:hover{filter:brightness(1.06);transform:translateY(-2px)}
+input,button{margin-top:6px;width:100%;padding:8px;border-radius:6px;border:0}
+button{background:#38bdf8;color:#012;font-weight:700;cursor:pointer}
+#troopsLayer text{font-weight:700;font-size:12px;fill:#fff;stroke:#133241;stroke-width:2;text-anchor:middle;dominant-baseline:middle}
+</style>
 </head>
 <body>
-  <h1>Controlla Il Mondo</h1>
-  <button id="salva">Aggiungi esempio</button>
-  <div id="output"></div>
-
-  <script type="module" src="firebase.js"></script>
-  <script type="module" src="script.js"></script>
+<div id="sidebar">
+  <h2>Controlla il Mondo</h2>
+  <div id="user">Connessione...</div>
+  <hr>
+  <label>Stato selezionato</label><div id="selectedName">Nessuno</div>
+  <label>Nuovo nome</label><input id="rename" type="text" placeholder="Nome">
+  <label>Colore</label><input id="color" type="color" value="#2b8cff">
+  <label>Truppe</label><input id="troops" type="number" min="0" value="0">
+  <button id="save">Salva su cloud</button>
+  <button id="inc">+10 truppe</button>
+  <button id="dec">-10 truppe</button>
+  <div id="status">Stato locale</div>
+</div>
+<div id="map-wrap">
+  <svg id="world" viewBox="0 0 2000 1000" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+    <rect width="2000" height="1000" fill="#071827"></rect>
+    <path id="france" d="M700 320 L760 310 L790 340 L740 360 L700 350 Z"></path>
+    <path id="spain" d="M640 360 L680 340 L720 360 L690 390 L650 380 Z"></path>
+    <path id="italy" d="M820 360 L850 360 L860 390 L840 410 L810 390 Z"></path>
+    <path id="germany" d="M780 300 L820 300 L840 340 L800 350 L760 330 Z"></path>
+    <path id="uk" d="M720 260 L740 270 L760 260 L750 240 L730 245 Z"></path>
+    <path id="usa" d="M200 340 L300 300 L360 320 L350 380 L260 380 Z"></path>
+    <path id="brazil" d="M380 520 L450 520 L470 580 L420 620 L360 580 Z"></path>
+    <path id="egypt" d="M760 420 L820 420 L860 460 L810 490 L760 470 Z"></path>
+    <path id="russia" d="M980 180 L1080 180 L1100 220 L1020 260 L960 220 Z"></path>
+    <path id="china" d="M1160 320 L1260 320 L1290 380 L1220 420 L1140 360 Z"></path>
+    <path id="india" d="M1060 420 L1140 420 L1160 470 L1100 500 L1040 460 Z"></path>
+    <path id="australia" d="M1420 620 L1500 640 L1530 700 L1460 740 L1380 700 Z"></path>
+    <g id="troopsLayer"></g>
+  </svg>
+</div>
+<script type="module" src="firebase.js"></script>
+<script type="module" src="script.js"></script>
 </body>
 </html>
